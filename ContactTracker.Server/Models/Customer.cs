@@ -1,15 +1,32 @@
-﻿namespace ContactTracker.Server.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.Numerics;
+
+namespace ContactTracker.Server.Models
 {
     public class Customer
     {
-        public int CustomerId { get; set; } // Primary key
+        // ID* - 1-1
+        [Key]
+        public int CustomerID { get; set; }
+        // FirstName* - 1-1
+        [Required]
+        public string FirstName { get; set; }
+        // LastName* - 1-1
+        [Required]
+        public string LastName { get; set; }
 
-        // Other properties
-        public string Name { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
+        // Birthdate* - 1-1
+        [Required]
+        public DateTime Birthdate { get; set; }
 
-        // Navigation property for relational data - one customer to many contact attempts
-        public ICollection<ContactAttempt> ContactAttempts { get; set; }
+        // Navigation property
+        // PhoneNumber? - 0-n
+        public ICollection<Phone> PhoneNumbers { get; set; }
+
+        // Email? - 0-n
+        public ICollection<Email> Emails { get; set; }
+
+        // Address? - 0-n - 0-n
+        public ICollection<CustomerAddress> Addresses { get; set; }
     }
 }
